@@ -1,0 +1,64 @@
+<%@page import="java.sql.*" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/NewFile.css"/>
+<title>Insert title here</title>
+</head>
+<body>
+<h1 class="heading">Welcome to Signup page</h1>
+<form action="" medthod="post" class="form">
+Name : <input type="text" name="name" id=name> <br/> <br/> 
+Email  : <input type="email" name="email" id=email> <br/> <br/> 
+Phone number : <input type="text" name="phone" id=phone> <br/> <br/> 
+Password : <input type="password" name="pass" id=pass> <br/> <br/> 
+ <input type="submit" value="Register">
+</form>
+<%
+String name = request.getParameter("name");
+String email = request.getParameter("email");
+String phone = request.getParameter("phone");
+String pass = request.getParameter("pass");
+
+try{
+	Class.forName("com.mysql.jdbc.Driver");
+	Connection con = DriverManager.getConnection("jdbc:mysql://localhost/user","root","");
+			PreparedStatement ps = con.prepareStatement("insert into ok values(?,?,?,?)");
+			ps.setString(1,name);
+			ps.setString(2,email);
+			ps.setString(3,phone);
+			ps.setString(4,pass);
+			
+			int i = ps.executeUpdate();
+			
+			if(i>0){
+				out.println("<script>alert('Inserted Success')</scrip>t");
+			}
+}
+catch(Exception ex){
+	ex.printStackTrace();
+}
+%>
+</body>
+</html>
+
+----------------------------------------------------------------------
+
+@charset "UTF-8";
+
+.heading{
+	color:red;
+}
+.form{
+	align-items:center;
+	margin-right:500px;
+	margin-left:600px;
+	background-color : green ;
+}
+
+body{
+	background-color: orange;
+}
